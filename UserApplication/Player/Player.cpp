@@ -134,7 +134,7 @@ void Player::Collision()
 		pos.y = abs((float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f) + 2;
 		pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
 		
-		
+		 
 	}
 }
 
