@@ -11,7 +11,7 @@
 
 GameScene::GameScene() {}
 GameScene::~GameScene() {
-	model_.reset();
+	//model_.reset();
 }
 
 void GameScene::Initialize() {
@@ -23,7 +23,7 @@ void GameScene::Initialize() {
 	//当たり判定
 	collisionManager = CollisionManager::GetInstance();
 
-	model_.reset(Model::CreateFromOBJ("UFO", true));
+	//model_.reset(Model::CreateFromOBJ("UFO", true));
 
 	viewProjection_.eye = { 0,10,-10 };
 
@@ -39,10 +39,10 @@ void GameScene::Initialize() {
 
 	boxCollision = std::make_unique<BoxCollision>();
 
-	model_->SetPolygonExplosion({ 0.0f,1.0f,0.0f,0.0f });
+	//model_->SetPolygonExplosion({ 0.0f,1.0f,0.0f,0.0f });
 	UINT tex = TextureManager::GetInstance()->Load("effect1.png");
 
-	stageModel_.reset(Model::CreateFromOBJ("stage", true));
+	//stageModel_.reset(Model::CreateFromOBJ("stage", true));
 
 	stageWorldTransform_.Initialize();
 
@@ -102,7 +102,7 @@ void GameScene::Draw() {
 	
 
 
-	stageModel_->Draw(stageWorldTransform_,viewProjection_);
+	//stageModel_->Draw(stageWorldTransform_,viewProjection_);
 
 	
 

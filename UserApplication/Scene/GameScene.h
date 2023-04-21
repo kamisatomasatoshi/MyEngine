@@ -26,15 +26,6 @@
 #include <CollisionManager.h>
 //#include"MiniFish.h"
 
-enum class GamePhase {
-	GameTutorial,	//チュートリアル
-	GameMovie1,		//ムービー1(チュートリアル→ボス戦への遷移)
-	GameBoss1,		//ボス戦第一形態
-	GameMovie2,		//ムービー2(ボスの形態変化)
-	GameBoss2,		//ボス戦第二形態
-	GameMovie3,		//ムービー3(ボスが死ぬとき)
-};
-
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -88,7 +79,7 @@ private: // メンバ変数
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
 	// 3Dモデル
-	std::unique_ptr<Model> model_;
+	//std::unique_ptr<Model> model_;
 
 	//当たり判定
 	CollisionManager* collisionManager = nullptr;
@@ -109,7 +100,7 @@ private: // メンバ変数
 	
 
 	// 3Dモデル
-	std::unique_ptr<Model> stageModel_;
+	//std::unique_ptr<Model> stageModel_;
 	//ワールド変換データ
 	WorldTransform stageWorldTransform_;
 };
