@@ -33,7 +33,6 @@ void FbxLoader::Initialize(ID3D12Device* device)
     FbxIOSettings* ios = FbxIOSettings::Create(fbxManager, IOSROOT);
     //FBXインポータの生成
     fbxImporter = FbxImporter::Create(fbxManager, "");
-
 }
 
 void FbxLoader::LoadModelFromFile(const string& modelName)
@@ -67,6 +66,9 @@ void FbxLoader::LoadModelFromFile(const string& modelName)
     ParseNodeRecursive(model, fbxScene->GetRootNode());
     //FBXシーン解放
     fbxScene->Destroy();
+
+    //バッファ生成
+    model->CreateBuffers(device);
 }
 
 void FbxLoader::ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode, Node* parent)
@@ -93,15 +95,15 @@ void FbxLoader::ParseNodeRecursive(FbxModel* model, FbxNode* fbxNode, Node* pare
     node.rotation.m128_f32[2] = XMConvertToRadians(node.rotation.m128_f32[2]);
 
     //スケール、回転、平行移動行列の計算
-    XMMATRIX matScaling, matRotation, matTranslation;
+    XMMATRIX matScaling, matRotation, matTranslation{};
     matScaling = XMMatrixScalingFromVector(node.scaling);
     matRotation = XMMatrixRotationRollPitchYawFromVector(node.rotation);
 
     //ローカル変形行列の計算
     node.transform = XMMatrixIdentity();
-    node.transform *= matScaling;
-    node.transform *= matRotation;
-    node.transform *= matTranslation;
+    node.transform *= matScaling;//ワールド行列にスケーリングを反映
+    node.transform *= matRotation;//ワールド行列に回転を反映
+    node.transform *= matTranslation;//ワールド行列に平行移動を反映
     //FBXノードの情報を解析してノードに記録（Todo）
     
     //グローバル変数行列の計算

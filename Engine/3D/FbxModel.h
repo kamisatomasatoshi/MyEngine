@@ -15,6 +15,8 @@
 #include <WorldTransform.h>
 #include <ViewProjection.h>
 
+
+
 // ノード
 struct Node
 {
@@ -81,6 +83,20 @@ private: // エイリアス
 	// std::を省略
 	using string = std::string;
 	template <class T> using vector = std::vector<T>;
+
+	//頂点バッファ
+	ComPtr<ID3D12Resource> vertBuff;
+	//インデックスバッファ
+	ComPtr<ID3D12Resource> indexBuff;
+	//テクスチャバッファ
+	ComPtr<ID3D12Resource> texBuff;
+	//頂点バッファビュー
+	D3D12_VERTEX_BUFFER_VIEW vbView = {};
+	//インデックスバッファビュー
+	D3D12_INDEX_BUFFER_VIEW ibView = {};
+	//SRV用デスクリプタヒープ
+	ComPtr<ID3D12DescriptorHeap> descHeapSRV;
+
 
 public: // サブクラス
 	// 頂点データ構造体
@@ -156,6 +172,9 @@ public: // 静的メンバ関数
 
 	// 描画後処理
 	static void PostDraw();
+
+	//バッファ生成
+	void CreateBuffers(ID3D12Device* device);
 
 public: // メンバ関数
 	// デストラクタ
