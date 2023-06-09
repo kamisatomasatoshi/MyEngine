@@ -277,6 +277,16 @@ void FbxLoader::ParseMaterial(FbxModel* model, FbxNode* fbxNode)
                 if (diffuseProperty.IsValid())
                 {
                     const FbxFileTexture* texture = diffuseProperty.GetSrcObject<FbxFileTexture>();
+                    if (texture)
+                    {
+                        const char* filepath = texture->GetFileName();
+                        //ファイルパスからファイル名抽出
+                        string path_str(filepath);
+                        string name = ExtractFileName(path_str);
+                        //テクスチャ読み込み
+                        LoadTexture(model, baseDirectory + model->name_ + "/" + name);
+                        textureLoaded = true;
+                    }
                 }
             }
 
@@ -286,6 +296,24 @@ void FbxLoader::ParseMaterial(FbxModel* model, FbxNode* fbxNode)
         {
             LoadTexture(model, baseDirectory + defaultTextureFileName);
         }
+    }
+}
+
+void FbxLoader::LoadTexture(FbxModel* model, const std::string& fullpath)
+{
+    HRESULT result = S_FALSE;
+    //WICテクスチャロード
+    TexMetadata& metadata = model->metadata;
+    ScratchImage& scratchImg = model->scratchImage;
+    //ユニコード文字列に変換
+    wchar_t wfilepath[128];
+    MultiByteToWideChar(CP_ACP, 0, fullpath.c_str(), -1, wfilepath, _countof(wfilepath));
+    result = LoadFromWICFile(
+        wfilepath, WIC_FLAGS_NONE,
+        &metadata, scratchImg);
+    if (FAILED(result))
+    {
+        assert(0);
     }
 }
 
