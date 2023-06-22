@@ -183,12 +183,16 @@ public: // メンバ関数
 	// 初期化
 	void Initialize();
 
-	// 描画
 	//void Draw(
 	//	const WorldTransform& worldTransform, const ViewProjection& viewProjection);
 
-	void Draw(const WorldTransform& worldTransform, const ViewProjection& viewProjection);
+	//void Draw(const WorldTransform& worldTransform, const ViewProjection& viewProjection);
 
+	// 描画
+	void Draw(ID3D12GraphicsCommandList* cmdList);
+
+	// モデルの変形行列取得
+	const XMMATRIX& GetModelTransform() { return meshNode->globalTransform; }
 
 	// メッシュコンテナを取得
 	inline const std::vector<Mesh*>& GetMeshes() { return meshes_; }

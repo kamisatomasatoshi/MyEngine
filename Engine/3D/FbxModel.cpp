@@ -298,13 +298,24 @@ void FbxModel::CreateBuffers(ID3D12Device* device)
 
 	//SRV用デスクリプタヒープを生成
 	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc = {};
-
 	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダから見えるように
 	descHeapDesc.NumDescriptors = 1;//テクスチャ枚数
 	result = device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&descHeapSRV));
 
+	// シェーダリソースビュー(SRV)作成
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{}; // 設定構造体
+	D3D12_RESOURCE_DESC resDesc = texbuff->GetDesc();
 
+	srvDesc.Format = resDesc.Format;
+	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;//2Dテクスチャ
+	srvDesc.Texture2D.MipLevels = 1;
+
+	device->CreateShaderResourceView(texbuff.Get(), //ビューと関連付けるバッファ
+		&srvDesc, //テクスチャ設定情報
+		descHeapSRV->GetCPUDescriptorHandleForHeapStart() // ヒープの先頭アドレス
+	);
 
 }
 
@@ -360,26 +371,34 @@ void FbxModel::Initialize() {
 
 }
 
-
-void FbxModel::Draw(
-	const WorldTransform& worldTransform, const ViewProjection& viewProjection) {
-
-	for (int i = 0; i < meshes_.size(); i++) {
-
-		// ライトの描画
-		lightGroup->Draw(sCommandList_, 4);
-
-		// CBVをセット（ワールド行列）
-		sCommandList_->SetGraphicsRootConstantBufferView(0, worldTransform.constBuff_->GetGPUVirtualAddress());
-
-		// CBVをセット（ビュープロジェクション行列）
-		sCommandList_->SetGraphicsRootConstantBufferView(1, viewProjection.constBuff_->GetGPUVirtualAddress());
+void FbxModel::Draw(ID3D12GraphicsCommandList* cmdList)
+{
 
 
-		// 全メッシュを描画
-		meshes_[i]->Draw(sCommandList_, 2, 3,2);
-	}
+
+
 }
+
+
+//void FbxModel::Draw(
+//	const WorldTransform& worldTransform, const ViewProjection& viewProjection) {
+//
+//	for (int i = 0; i < meshes_.size(); i++) {
+//
+//		// ライトの描画
+//		lightGroup->Draw(sCommandList_, 4);
+//
+//		// CBVをセット（ワールド行列）
+//		sCommandList_->SetGraphicsRootConstantBufferView(0, worldTransform.constBuff_->GetGPUVirtualAddress());
+//
+//		// CBVをセット（ビュープロジェクション行列）
+//		sCommandList_->SetGraphicsRootConstantBufferView(1, viewProjection.constBuff_->GetGPUVirtualAddress());
+//
+//
+//		// 全メッシュを描画
+//		meshes_[i]->Draw(sCommandList_, 2, 3,2);
+//	}
+//}
 //
 //void FbxModel::Draw(
 //	const WorldTransform& worldTransform, const ViewProjection& viewProjection,
