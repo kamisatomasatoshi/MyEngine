@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Object3d.h"
 #include "DirectXCore.h"
 #include "Input.h"
 #include "Model.h"
@@ -9,7 +9,7 @@
 #include "WorldTransform.h"
 #include "affin.h"
 #include"ParticleManager.h"
-
+#include "DebugCamera.h"
 #include "BaseScene.h"
 #include "SceneManager.h"
 
@@ -71,7 +71,9 @@ private: // メンバ変数
 	DirectXCore* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 
-
+	FbxModel* model1 = nullptr;
+	Object3d* object1 = nullptr;
+	DebugCamera* camera = nullptr;
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
 	//ワールド変換データ
@@ -102,5 +104,5 @@ private: // メンバ変数
 	// 3Dモデル
 	//std::unique_ptr<Model> stageModel_;
 	//ワールド変換データ
-	WorldTransform stageWorldTransform_;
+	//WorldTransform stageWorldTransform_;
 };
