@@ -98,10 +98,10 @@ private:
 	// 定数バッファ
 	ComPtr<ID3D12Resource> constBuff_;
 	// 定数バッファのマップ
-	ConstBufferData* constMap_;
+	ConstBufferData* constMap_ = nullptr;
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0;
-
+	
 private:
 	// コンストラクタ
 	Material() {

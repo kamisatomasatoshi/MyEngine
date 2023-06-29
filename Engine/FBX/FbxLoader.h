@@ -25,6 +25,14 @@ public:
 	/// <returns>インスタンス</returns>
 	static FbxLoader* GetInstance();
 
+
+	/// <summary>
+	/// FBXの行列をXMMatrixに変換
+	/// </summary>
+	/// <param name="device"></param>
+	static void ConvertMatrixFromFbx(DirectX::XMMATRIX* dst, const FbxAMatrix& src);
+
+
 	void Initialize(ID3D12Device* device);
 
 	//void LoadModelFromFile(const string& modelName);
@@ -42,6 +50,8 @@ public:
 	void ParseMaterial(FbxModel* model, FbxNode* fbxNode);
 	//テクスチャ読み込み
 	void LoadTexture(FbxModel* model, const std::string& fullpath);
+
+	void ParseSkin(FbxModel* model, FbxMesh* fbxMesh);
 
 	std::string ExtractFileName(const std::string& path);
 

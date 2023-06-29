@@ -14,6 +14,7 @@
 #include <Light.h>
 #include <WorldTransform.h>
 #include <ViewProjection.h>
+#include <fbxsdk.h>
 
 
 
@@ -41,6 +42,8 @@ class FbxModel
 public:
 	// フレンドクラス
 	friend class FbxLoader;
+	//定数
+	static const int MAX_BONE_INDICES = 4;
 
 public://サブクラス
 	//頂点データ構造体
@@ -49,8 +52,26 @@ public://サブクラス
 		DirectX::XMFLOAT3 pos;//ｘｙｚ座標
 		DirectX::XMFLOAT3 normal;//法線ベクトル
 		DirectX::XMFLOAT3 uv;//uv座標
+		UINT boneIndex[MAX_BONE_INDICES];
+		float boneWeight[MAX_BONE_INDICES];
 	};
 
+	//ボーン構造体
+	struct Bone {
+		//名前
+		std::string name;
+		//初期姿勢の逆行列
+		DirectX::XMMATRIX invInitialPose;
+		//クラスター
+		FbxCluster* fbxCluster;
+		//コンストラクタ
+		Bone(const std::string& name) {
+			this->name = name;
+		}
+
+	};
+
+	FbxScene* fbxScene = nullptr;
 
 	//メッシュを持つノード
 	Node* meshNode = nullptr;
@@ -97,33 +118,6 @@ private: // エイリアス
 	//SRV用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> descHeapSRV;
 
-
-public: // サブクラス
-	// 頂点データ構造体
-	struct VertexPosNormalUvFbxSkin
-	{
-		DirectX::XMFLOAT3 pos; // xyz座標
-		DirectX::XMFLOAT3 normal; // 法線ベクトル
-		DirectX::XMFLOAT2 uv;  // uv座標
-
-		UINT boneIndex[MAX_BONE_INDICES];
-		float boneWeight[MAX_BONE_INDICES];
-	};
-
-	//ボーン構造体
-	struct Bone {
-		std::string name;
-
-		DirectX::XMMATRIX invInitialPose;
-
-
-
-		Bone(const std::string& name) {
-			this->name = name;
-		}
-
-	};
-
 private:
 	// Microsoft::WRL::を省略
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -153,6 +147,8 @@ private: // 静的メンバ変数
 	static Microsoft::WRL::ComPtr<ID3D12PipelineState> sPipelineState_;
 	// ライト
 	static std::unique_ptr<LightGroup> lightGroup;
+
+
 
 public: // 静的メンバ関数
 	// 静的初期化
@@ -198,6 +194,8 @@ public: // メンバ関数
 	inline const std::vector<Mesh*>& GetMeshes() { return meshes_; }
 
 	std::vector<Bone>& GetBones() { return bones; }
+
+	FbxScene* GetFbxScene() { return fbxScene; }
 
 private:
 

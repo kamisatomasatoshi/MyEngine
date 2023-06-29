@@ -335,6 +335,7 @@ FbxModel::~FbxModel() {
 		delete m.second;
 	}
 	materials_.clear();
+	fbxScene->Destroy();
 }
 
 void FbxModel::Initialize() {

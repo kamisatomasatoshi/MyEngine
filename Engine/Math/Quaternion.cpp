@@ -7,6 +7,7 @@ float AngleNormalize(float x)
 	return  static_cast<int>((x > 0.0f ? x : 360.0f + x)) % 360;
 }
 
+
 Quaternion::Quaternion(float x, float y, float z, float w) : x(x), y(y), z(z), w(w)
 {
 
