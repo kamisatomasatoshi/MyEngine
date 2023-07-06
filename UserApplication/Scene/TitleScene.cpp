@@ -4,7 +4,7 @@ void TitleScene::Initialize()
 {
 	input = Input::GetInstance();
 
-	loserTexture_ = TextureManager::Load("kyomu.png");
+	loserTexture_ = TextureManager::Load("space.png");
 	sprite_=  Sprite::Create(loserTexture_);
 	sceneManager_ = SceneManager::GetInstance();
 

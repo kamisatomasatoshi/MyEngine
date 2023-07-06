@@ -91,7 +91,7 @@ void Framework::Finalize()
 
 	imGui->Finalize();
 	sceneFactory_.reset();
-
+	FbxLoader::GetInstance()->Finalize();
 	//TextureManager_->Delete();
 
 	input_->Destroy();

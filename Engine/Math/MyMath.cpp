@@ -455,7 +455,7 @@ Matrix4 MyMath::LookAtLH(Vector3 eye, Vector3 target, Vector3 up) {
 
 Matrix4 MyMath::PerspectiveFovLH(float fovAngleY, float aspectRatio, float nearZ, float farZ) {
 
-	float h = 1 / tan(fovAngleY * 0.5);
+	float h = 1 / tan(fovAngleY * 0.5f);
 	float w = h / aspectRatio;
 	float a = farZ / (farZ - nearZ);
 	float b = (-nearZ * farZ) / (farZ - nearZ);

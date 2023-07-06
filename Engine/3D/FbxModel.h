@@ -14,6 +14,9 @@
 #include <Light.h>
 #include <WorldTransform.h>
 #include <ViewProjection.h>
+#include <fbxsdk.h>
+
+
 
 // ノード
 struct Node
@@ -39,9 +42,52 @@ class FbxModel
 public:
 	// フレンドクラス
 	friend class FbxLoader;
-
-public://定数
+	//定数
 	static const int MAX_BONE_INDICES = 4;
+
+public://サブクラス
+	//頂点データ構造体
+	struct VertexPosNormalUv
+	{
+		DirectX::XMFLOAT3 pos;//ｘｙｚ座標
+		DirectX::XMFLOAT3 normal;//法線ベクトル
+		DirectX::XMFLOAT3 uv;//uv座標
+		UINT boneIndex[MAX_BONE_INDICES];
+		float boneWeight[MAX_BONE_INDICES];
+	};
+
+	//ボーン構造体
+	struct Bone {
+		//名前
+		std::string name;
+		//初期姿勢の逆行列
+		DirectX::XMMATRIX invInitialPose;
+		//クラスター
+		FbxCluster* fbxCluster;
+		//コンストラクタ
+		Bone(const std::string& name) {
+			this->name = name;
+		}
+
+	};
+
+	FbxScene* fbxScene = nullptr;
+
+	//メッシュを持つノード
+	Node* meshNode = nullptr;
+	//頂点データ配列
+	std::vector<VertexPosNormalUv> vertices;
+	//頂点インデックス
+	std::vector<unsigned short> indices;
+
+	//アンビエント係数
+	DirectX::XMFLOAT3 ambient = { 1,1,1 };
+	//ディフューズ
+	DirectX::XMFLOAT3 diffuse = { 1,1,1 };
+	//テクスチャメタデータ
+	DirectX::TexMetadata metadata = {};
+	//スクラッチイメージ
+	DirectX::ScratchImage scratchImage = {};
 
 private: // エイリアス
 	// Microsoft::WRL::を省略
@@ -57,31 +103,18 @@ private: // エイリアス
 	using string = std::string;
 	template <class T> using vector = std::vector<T>;
 
-public: // サブクラス
-	// 頂点データ構造体
-	struct VertexPosNormalUvFbxSkin
-	{
-		DirectX::XMFLOAT3 pos; // xyz座標
-		DirectX::XMFLOAT3 normal; // 法線ベクトル
-		DirectX::XMFLOAT2 uv;  // uv座標
-
-		UINT boneIndex[MAX_BONE_INDICES];
-		float boneWeight[MAX_BONE_INDICES];
-	};
-
-	//ボーン構造体
-	struct Bone {
-		std::string name;
-
-		DirectX::XMMATRIX invInitialPose;
-
-
-
-		Bone(const std::string& name) {
-			this->name = name;
-		}
-
-	};
+	//頂点バッファ
+	ComPtr<ID3D12Resource> vertBuff;
+	//インデックスバッファ
+	ComPtr<ID3D12Resource> indexBuff;
+	//テクスチャバッファ
+	ComPtr<ID3D12Resource> texbuff;
+	//頂点バッファビュー
+	D3D12_VERTEX_BUFFER_VIEW vbView = {};
+	//インデックスバッファビュー
+	D3D12_INDEX_BUFFER_VIEW ibView = {};
+	//SRV用デスクリプタヒープ
+	ComPtr<ID3D12DescriptorHeap> descHeapSRV;
 
 private:
 	// Microsoft::WRL::を省略
@@ -113,6 +146,8 @@ private: // 静的メンバ変数
 	// ライト
 	static std::unique_ptr<LightGroup> lightGroup;
 
+
+
 public: // 静的メンバ関数
 	// 静的初期化
 	static void StaticInitialize();
@@ -132,6 +167,9 @@ public: // 静的メンバ関数
 	// 描画後処理
 	static void PostDraw();
 
+	//バッファ生成
+	void CreateBuffers(ID3D12Device* device);
+
 public: // メンバ関数
 	// デストラクタ
 	~FbxModel();
@@ -139,17 +177,23 @@ public: // メンバ関数
 	// 初期化
 	void Initialize();
 
-	// 描画
 	//void Draw(
 	//	const WorldTransform& worldTransform, const ViewProjection& viewProjection);
 
-	void Draw(const WorldTransform& worldTransform, const ViewProjection& viewProjection);
+	//void Draw(const WorldTransform& worldTransform, const ViewProjection& viewProjection);
 
+	// 描画
+	void Draw(ID3D12GraphicsCommandList* cmdList);
+
+	// モデルの変形行列取得
+	const XMMATRIX& GetModelTransform() { return meshNode->globalTransform; }
 
 	// メッシュコンテナを取得
 	inline const std::vector<Mesh*>& GetMeshes() { return meshes_; }
 
 	std::vector<Bone>& GetBones() { return bones; }
+
+	FbxScene* GetFbxScene() { return fbxScene; }
 
 private:
 

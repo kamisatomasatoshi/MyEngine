@@ -61,6 +61,12 @@
     <FxCompile Include="Resources\Shaders\testVS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shaders\FBXPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\FBXVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\2D\PostEffect.cpp">
@@ -203,6 +209,15 @@
     </ClCompile>
     <ClCompile Include="UserApplication\Skydome\Skydome.cpp">
       <Filter>ユーザーリソース ファイル\Skydome</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3D\Object3d.cpp">
+      <Filter>Engine\Cpp\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Camera\Camera.cpp">
+      <Filter>Engine\Cpp\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Camera\DebugCamera.cpp">
+      <Filter>Engine\Cpp\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -371,6 +386,15 @@
     <ClInclude Include="UserApplication\Skydome\Skydome.h">
       <Filter>ユーザーヘッダー ファイル\Skydome</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\3D\Object3d.h">
+      <Filter>Engine\Header\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Camera\Camera.h">
+      <Filter>Engine\Header\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Camera\DebugCamera.h">
+      <Filter>Engine\Header\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\Obj.hlsli">
@@ -398,6 +422,9 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Resources\Shaders\test.hlsli">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Resources\Shaders\FBX.hlsli">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

@@ -1,4 +1,4 @@
-#include "GameScene.h"
+﻿#include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
 #include <random>
@@ -8,6 +8,8 @@
 #include <CollisionAttribute.h>
 #include "Collision.h"
 #include"PostEffect.h"
+#include "Object3d.h"
+
 
 GameScene::GameScene() {}
 GameScene::~GameScene() {
@@ -20,6 +22,7 @@ void GameScene::Initialize() {
 	winApp_ = WinApp::GetInstance();
 	input_ = Input::GetInstance();
 
+	camera = new DebugCamera(WinApp::window_width, WinApp::window_height, input_);
 	//当たり判定
 	collisionManager = CollisionManager::GetInstance();
 
@@ -34,24 +37,39 @@ void GameScene::Initialize() {
 
 	worldTransform_.Initialize();
 	
-
+	FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 	
 
-	boxCollision = std::make_unique<BoxCollision>();
+	//boxCollision = std::make_unique<BoxCollision>();
 
 	//model_->SetPolygonExplosion({ 0.0f,1.0f,0.0f,0.0f });
 	UINT tex = TextureManager::GetInstance()->Load("effect1.png");
 
 	//stageModel_.reset(Model::CreateFromOBJ("stage", true));
 
-	stageWorldTransform_.Initialize();
+	//stageWorldTransform_.Initialize();
 
 
-	stageWorldTransform_.scale_ = { 52,50,52 };
+	//stageWorldTransform_.scale_ = { 52,50,52 };
 
-	stageWorldTransform_.translation_ = Vector3(0, -2.1f, 0);
+	//stageWorldTransform_.translation_ = Vector3(0, -2.1f, 0);
+	
+	camera->SetTarget({ 0,20,0 });
+	camera->SetDistance(100.0f);
 
-	stageWorldTransform_.TransferMatrix();
+	model1 = FbxLoader::GetInstance()->LoadModelFromFile("cube");
+
+	//デバイスのセット
+	Object3d::SetDevice(dxCommon_->GetDevice());
+	//カメラのセット
+	Object3d::SetCamera(camera);
+	//グラフィックスパイプライン生成
+	Object3d::CreateGraphicsPipeline();
+	
+	object1 = new Object3d;
+	object1->Initialize();
+	object1->SetModel(model1);
+
 }
 
 void GameScene::Update() {
@@ -60,12 +78,12 @@ void GameScene::Update() {
 		static int a = 0;
 		a++;
 	}
-	
+	camera->Update();
 	viewProjection_.UpdateMatrix();
-
+	object1->Update();
 
 	//全ての衝突をチェック
-	collisionManager->CheckAllCollisions();
+	//collisionManager->CheckAllCollisions();
 
 }
 
@@ -77,7 +95,7 @@ void GameScene::PostEffectDraw()
 
 	ParticleManager::PreDraw(commandList);
 
-	
+	//
 
 	ParticleManager::PostDraw();
 
@@ -103,7 +121,7 @@ void GameScene::Draw() {
 
 
 	//stageModel_->Draw(stageWorldTransform_,viewProjection_);
-
+	object1->Draw(commandList);
 	
 
 	//3Dオブジェクト描画後処理

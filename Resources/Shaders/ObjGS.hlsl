@@ -10,7 +10,10 @@ float3 rotate(float3 p, float3 rotation)
     float3 a = normalize(rotation);
     float angle = length(rotation);
     //rotation‚ªƒ[ƒs—ñ‚Ì‚Æ‚«‚Ì‘Î‰
-    if (abs(angle) < 0.001) return p;
+   /* if (abs(angle) < 0.001)
+    {
+        return p;
+    }*/
     float s = sin(angle);
     float c = cos(angle);
     float r = 1.0 - c;
