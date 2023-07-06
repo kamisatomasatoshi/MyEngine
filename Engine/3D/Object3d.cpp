@@ -179,10 +179,12 @@ void Object3d::CreateGraphicsPipeline()
 
 void Object3d::Initialize()
 {
+	//１フレーム分の時間を６０FPSで設定
+	frameTime.SetTime(0, 0, 0, 1, 0, FbxTime::EMode::eFrames60);
 	CD3DX12_HEAP_PROPERTIES aa = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	CD3DX12_RESOURCE_DESC bb = CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataTransform) + 0xff) & ~0xff);
 	HRESULT result;
-	// 定数バッファの生成
+	//トランスフォーム行列定数バッファ
 	result = device->CreateCommittedResource(
 		&aa,
 		D3D12_HEAP_FLAG_NONE,
@@ -191,6 +193,7 @@ void Object3d::Initialize()
 		nullptr,
 		IID_PPV_ARGS(&constBuffTransform));
 
+	//定数バッファの生成
 	result = device->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),//アップロード可能
 		D3D12_HEAP_FLAG_NONE,
@@ -198,6 +201,17 @@ void Object3d::Initialize()
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&constBuffSkin));
+
+	//定数バッファへデータ送信
+	ConstBufferDataSkin* constMapSkin = nullptr;
+	result = constBuffSkin->Map(0, nullptr, (void**)&constMapSkin);
+	for (int i = 0; i < MAX_BONES; i++)
+	{
+		constMapSkin->bones[i] = XMMatrixIdentity();
+	}
+	constBuffSkin->Unmap(0, nullptr);
+
+	
 }
 
 void Object3d::Update()
@@ -248,13 +262,45 @@ void Object3d::Update()
 		XMMATRIX matCurrentPose;
 		//今の姿勢行列を取得
 		FbxAMatrix fbxCurrentPose =
-			bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(0);
+			bones[i].fbxCluster->GetLink()->EvaluateGlobalTransform(currentTime);
 		//XMMATRIXに変換
 		FbxLoader::ConvertMatrixFromFbx(&matCurrentPose, fbxCurrentPose);
 		//合成してスキニング表列
 		constMapSkin->bones[i] = bones[i].invInitialPose * matCurrentPose;
 	}
 	constBuffSkin->Unmap(0, nullptr);
+
+	if (isPlay)
+	{
+		//１フレーム進める
+		currentTime += frameTime;
+		//最後まで再生したら先頭に戻す
+		if (currentTime > endTime)
+		{
+			currentTime = startTime;
+		}
+	}
+}
+
+void Object3d::PlayAnimation()
+{
+	FbxScene* fbxScene = fbxModel_->GetFbxScene();
+	//0番目のアニメーションを取得
+	FbxAnimStack* animstack = fbxScene->GetSrcObject<FbxAnimStack>(0);
+	//アニメーション名前取得
+	const char* animstackname = animstack->GetName();
+	//開始時間取得
+	FbxTakeInfo* takeinfo = fbxScene->GetTakeInfo(animstackname);
+
+	//開始時間取得
+	startTime = takeinfo->mLocalTimeSpan.GetStart();
+	//終了時間
+	endTime = takeinfo->mLocalTimeSpan.GetStop();
+	//開始時間に合わせる
+	currentTime = startTime;
+	//再生中状態にする
+	isPlay = true;
+
 }
 
 void Object3d::Draw(ID3D12GraphicsCommandList* cmdList)

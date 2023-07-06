@@ -62,6 +62,10 @@ public: // メンバ関数
 	/// 毎フレーム処理
 	/// </summary>
 	void Update();
+	/// <summary>
+	///アニメーション開始 
+	/// </summary>
+	void PlayAnimation();
 
 	/// <summary>
 	/// 描画
@@ -92,5 +96,17 @@ protected: // メンバ変数
 	XMMATRIX matWorld;
 	// モデル
 	FbxModel* fbxModel_ = nullptr;
+
+	//１フレームの時間
+	FbxTime frameTime;
+	//アニメーション開始移管
+	FbxTime startTime;
+	//アニメーション終了時間
+	FbxTime endTime;
+	//現在時間（アニメーション）
+	FbxTime currentTime;
+	//アニメーション再生中
+	bool isPlay = false;
+
 };
 
