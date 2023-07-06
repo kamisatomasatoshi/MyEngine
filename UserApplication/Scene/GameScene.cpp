@@ -10,6 +10,7 @@
 #include"PostEffect.h"
 #include "Object3d.h"
 
+
 GameScene::GameScene() {}
 GameScene::~GameScene() {
 	//model_.reset();
@@ -36,6 +37,7 @@ void GameScene::Initialize() {
 
 	worldTransform_.Initialize();
 	
+	FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 	
 
 	//boxCollision = std::make_unique<BoxCollision>();

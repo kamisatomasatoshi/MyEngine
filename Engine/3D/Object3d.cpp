@@ -92,7 +92,7 @@ void Object3d::CreateGraphicsPipeline()
 			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
 		},
 		{//ボーンのスキンウェイト（４）
-			"BONEWEIGHTS",0,DXGI_FORMAT_R32G32B32A32_UINT,0,
+			"BONEWEIGHTS",0,DXGI_FORMAT_R32G32B32A32_FLOAT,0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
 			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
 		}
@@ -321,7 +321,7 @@ void Object3d::Draw(ID3D12GraphicsCommandList* cmdList)
 	// 定数バッファビューをセット
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuffTransform->GetGPUVirtualAddress());
 	//定数バッファビューをセット
-	cmdList->SetGraphicsRootShaderResourceView(2, constBuffSkin->GetGPUVirtualAddress());
+	cmdList->SetGraphicsRootConstantBufferView(2, constBuffSkin->GetGPUVirtualAddress());
 	// モデル描画
 	fbxModel_->Draw(cmdList);
 }
