@@ -9,6 +9,7 @@
 #include <d3dx12.h>
 #include <DirectXMath.h>
 #include <string>
+#include "FbxLoader.h"
 
 class Object3d
 {
@@ -48,6 +49,8 @@ private: // 静的メンバ変数
 	static ComPtr<ID3D12RootSignature> rootsignature;
 	// パイプラインステートオブジェクト
 	static ComPtr<ID3D12PipelineState> pipelinestate;
+	//定数バッファ（スキン）
+	ComPtr<ID3D12Resource> constBuffSkin;
 
 public: // メンバ関数
 	/// <summary>
@@ -66,6 +69,15 @@ public: // メンバ関数
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 	void SetModel(FbxModel* model) { this->fbxModel_ = model; }
+
+public://定数
+	//ボーンの最大数
+	static const int MAX_BONES = 32;
+
+	struct ConstBufferDataSkin
+	{
+		XMMATRIX bones[MAX_BONES];
+	};
 
 protected: // メンバ変数
 	// 定数バッファ
