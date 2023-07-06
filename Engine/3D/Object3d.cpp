@@ -218,6 +218,8 @@ void Object3d::Initialize()
 
 void Object3d::Update()
 {
+
+
 	XMMATRIX matScale, matRot, matTrans;
 
 	// スケール、回転、平行移動行列の計算
@@ -255,11 +257,23 @@ void Object3d::Update()
 	//ボーン配列
 	std::vector<FbxModel::Bone>& bones = fbxModel_->GetBones();
 
+	if (isPlay)
+	{
+		//１フレーム進める
+		currentTime += frameTime;
+		//最後まで再生したら先頭に戻す
+		if (currentTime > endTime)
+		{
+			currentTime = startTime;
+		}
+	}
+
 	//定数バッファへのデータ転送
 	ConstBufferDataSkin* constMapSkin = nullptr;
 	result = constBuffSkin->Map(0, nullptr, (void**)&constMapSkin);
 	for (int i = 0; i < bones.size(); i++)
 	{
+
 		//今の姿勢行列
 		XMMATRIX matCurrentPose;
 		//今の姿勢行列を取得
@@ -272,16 +286,7 @@ void Object3d::Update()
 	}
 	constBuffSkin->Unmap(0, nullptr);
 
-	if (isPlay)
-	{
-		//１フレーム進める
-		currentTime += frameTime;
-		//最後まで再生したら先頭に戻す
-		if (currentTime > endTime)
-		{
-			currentTime = startTime;
-		}
-	}
+	PlayAnimation();
 }
 
 void Object3d::PlayAnimation()

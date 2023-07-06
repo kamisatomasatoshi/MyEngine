@@ -37,7 +37,7 @@ void GameScene::Initialize() {
 
 	worldTransform_.Initialize();
 	
-	FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+	//FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 	
 
 	//boxCollision = std::make_unique<BoxCollision>();
@@ -57,7 +57,7 @@ void GameScene::Initialize() {
 	camera->SetTarget({ 0,20,0 });
 	camera->SetDistance(100.0f);
 
-	model1 = FbxLoader::GetInstance()->LoadModelFromFile("cube");
+	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
 	//デバイスのセット
 	Object3d::SetDevice(dxCommon_->GetDevice());
@@ -69,7 +69,7 @@ void GameScene::Initialize() {
 	object1 = new Object3d;
 	object1->Initialize();
 	object1->SetModel(model1);
-
+	
 }
 
 void GameScene::Update() {
@@ -80,6 +80,7 @@ void GameScene::Update() {
 	}
 	camera->Update();
 	viewProjection_.UpdateMatrix();
+	//object1->PlayAnimation();
 	object1->Update();
 
 	//全ての衝突をチェック
