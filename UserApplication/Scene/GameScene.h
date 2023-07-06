@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Object3d.h"
 #include "DirectXCore.h"
 #include "Input.h"

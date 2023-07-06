@@ -444,7 +444,7 @@ void ParticleManager::Draw(ViewProjection view)
 	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(cmdList, 1, textureHandle_);
 	// 描画コマンド
 	//cmdList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
-	cmdList->DrawInstanced(inParticles.size()+outParticles.size(), 1, 0, 0);
+	cmdList->DrawInstanced(static_cast<UINT>(inParticles.size()+outParticles.size()), 1, 0, 0);
 }
 
 void ParticleManager::InAdd(int life, Vector3 startPosition, Vector3 endPosition,float startScale, float endScale, Vector4 startColor, Vector4 endColor)

@@ -1,29 +1,12 @@
 #include "FBX.hlsli"
 
-
-VSOutput main(VSInput input)
-{
-	//スキニング計算
-	SkinOutput skinned = ComputeSkin(input);
-	//法線にワールド行列によるスケーリング・回転
-	float4 wnormal = normalize(mul(world, float4(skinned.normal, 0)));
-	//ピクセルシェーダーに渡す値
-	VSOutput output;
-	//行列による座標変換
-	output.svpos = mul(mul(viewproj, world), skinned.pos);
-	//ワールド法線を次のステージに渡す
-	output.normal = wnormal.xyz;
-	//入力値をそのまま次のステージに渡す
-	output.uv = input.uv;
-
-	return output;
-}
 //スキニング後の頂点・法線が入る
 struct SkinOutput
 {
 	float4 pos;
 	float3 normal;
 };
+
 
 //スキニング計算
 SkinOutput ComputeSkin(VSInput input)
@@ -66,6 +49,26 @@ SkinOutput ComputeSkin(VSInput input)
 
 	return output;
 }
+
+VSOutput main(VSInput input)
+{
+	//スキニング計算
+	SkinOutput skinned = ComputeSkin(input);
+	//法線にワールド行列によるスケーリング・回転
+	float4 wnormal = normalize(mul(world, float4(skinned.normal, 0)));
+	//ピクセルシェーダーに渡す値
+	VSOutput output;
+	//行列による座標変換
+	output.svpos = mul(mul(viewproj, world), skinned.pos);
+	//ワールド法線を次のステージに渡す
+	output.normal = wnormal.xyz;
+	//入力値をそのまま次のステージに渡す
+	output.uv = input.uv;
+
+	return output;
+}
+
+
 
 //スキンウェイトを使わずに１頂点いボーンの影響だけ受けるようにする
 //SkinOutPut ComputeSkin(VSInput inpot)

@@ -88,8 +88,6 @@ public://サブクラス
 	DirectX::TexMetadata metadata = {};
 	//スクラッチイメージ
 	DirectX::ScratchImage scratchImage = {};
-public://定数
-	static const int MAX_BONE_INDICES = 4;
 
 private: // エイリアス
 	// Microsoft::WRL::を省略
