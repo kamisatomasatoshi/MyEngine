@@ -20,9 +20,32 @@ DirectXCore* DirectXCore::GetInstance() {
 	return DirectXCore_;
 }
 
+DirectXCore::~DirectXCore()
+{
+	dxgiFactory.Reset();
+	commandList.Reset();
+	commandAllocator.Reset();
+	commandQueue.Reset();
+	swapChain.Reset();
+	backBuffers.clear();
+	depthBuffer.Reset();
+	rtvHeap.Reset();
+	dsvHeap.Reset();
+	fence.Reset();
+
+
+
+	device.Reset();
+
+}
+
+
 void DirectXCore::Destroy(){
 
 	delete DirectXCore_;
+	
+	
+
 }
 
 void DirectXCore::DirectXCoreInitialize(HWND hwnd, int window_width, int window_height) {
@@ -154,6 +177,8 @@ void DirectXCore::ClearDepthBuffer() {
 }
 
 
+
+
 void DirectXCore::InitializeDevice() {
 	HRESULT result = S_FALSE;
 
@@ -250,7 +275,7 @@ void DirectXCore::InitializeDevice() {
 		// エラー時にブレークを発生させる
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
+		//infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
 	}
 #endif
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include "DirectXCore.h"
 #include "GameScene.h"
+
 #include "TextureManager.h"
 #include "WinApp.h"
 #include "Input.h"

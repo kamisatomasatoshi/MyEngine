@@ -219,6 +219,9 @@
     <ClCompile Include="Engine\Camera\DebugCamera.cpp">
       <Filter>Engine\Cpp\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Loader\LevelLoader.cpp">
+      <Filter>Engine\Cpp\Loader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\2D\PostEffect.h">
@@ -395,6 +398,9 @@
     <ClInclude Include="Engine\Camera\DebugCamera.h">
       <Filter>Engine\Header\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Loader\LevelLoader.h">
+      <Filter>Engine\Header\Loader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\Obj.hlsli">
@@ -536,6 +542,12 @@
     </Filter>
     <Filter Include="ユーザーヘッダー ファイル\Skydome">
       <UniqueIdentifier>{dd9a25fe-08ee-4128-bf14-efe6dced86ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Header\Loader">
+      <UniqueIdentifier>{5d0fac67-896e-49e3-8f11-6a66840ad449}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Cpp\Loader">
+      <UniqueIdentifier>{d7e11365-5050-4fc9-a177-4a944367c2c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

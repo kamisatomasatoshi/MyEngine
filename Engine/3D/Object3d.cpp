@@ -86,12 +86,12 @@ void Object3d::CreateGraphicsPipeline()
 			D3D12_APPEND_ALIGNED_ELEMENT,
 			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
 		},
-		{//影響を受けるボーン番号（４）
+		{//影響を受けるボーン番号（４つ）
 			"BONEINDICES",0,DXGI_FORMAT_R32G32B32A32_UINT,0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
 			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
 		},
-		{//ボーンのスキンウェイト（４）
+		{//ボーンのスキンウェイト（４つ）
 			"BONEWEIGHTS",0,DXGI_FORMAT_R32G32B32A32_FLOAT,0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
 			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
@@ -179,8 +179,8 @@ void Object3d::CreateGraphicsPipeline()
 
 void Object3d::Initialize()
 {
-	//１フレーム分の時間を６０FPSで設定
-	frameTime.SetTime(0, 0, 0, 1, 0, FbxTime::EMode::eFrames60);
+	
+
 	CD3DX12_HEAP_PROPERTIES aa = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD);
 	CD3DX12_RESOURCE_DESC bb = CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataTransform) + 0xff) & ~0xff);
 	HRESULT result;
@@ -213,7 +213,9 @@ void Object3d::Initialize()
 	}
 	constBuffSkin->Unmap(0, nullptr);
 
-	
+	//１フレーム分の時間を６０FPSで設定
+	frameTime.SetTime(0, 0, 0, 1, 0, FbxTime::EMode::eFrames60);
+
 }
 
 void Object3d::Update()
@@ -286,7 +288,7 @@ void Object3d::Update()
 	}
 	constBuffSkin->Unmap(0, nullptr);
 
-	PlayAnimation();
+	//PlayAnimation();
 }
 
 void Object3d::PlayAnimation()

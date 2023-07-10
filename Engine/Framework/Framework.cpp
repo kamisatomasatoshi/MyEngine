@@ -92,15 +92,15 @@ void Framework::Finalize()
 	imGui->Finalize();
 	sceneFactory_.reset();
 	FbxLoader::GetInstance()->Finalize();
-	//TextureManager_->Delete();
+	TextureManager_->Delete();
 
 	input_->Destroy();
 
-	//directXCore_->Destroy();
+	directXCore_->Destroy();
 
 	// ゲームウィンドウの破棄
 	winApp_->DeleteGameWindow();
-	//winApp_->Destroy();
+	winApp_->Destroy();
 
 
 }

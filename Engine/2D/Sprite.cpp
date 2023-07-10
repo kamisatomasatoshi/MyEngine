@@ -21,6 +21,12 @@ ComPtr<ID3D12RootSignature> Sprite::RootSignature_;
 std::array<ComPtr<ID3D12PipelineState>, 6> Sprite::PipelineStates_;
 Matrix4 Sprite::Matrix4Projection_;
 
+Sprite::~Sprite()
+{
+	vertBuff_->Release();
+	constBuff_->Release();
+}
+
 void Sprite::StaticInitialize(
 	ID3D12Device* device,const std::wstring& directoryPath) {
 	// nullptrチェック

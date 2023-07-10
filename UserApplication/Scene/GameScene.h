@@ -30,6 +30,16 @@
 /// ゲームシーン
 /// </summary>
 class GameScene : public BaseScene {
+protected:
+	// Microsoft::WRL::を省略
+	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+	// DirectX::を省略
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+	using XMVECTOR = DirectX::XMVECTOR;
+	using XMMATRIX = DirectX::XMMATRIX;
+
 
 public: // メンバ関数
 	/// <summary>
@@ -97,7 +107,8 @@ private: // メンバ変数
 
 	//Boss boss;
 	//デバッグによる生成用
-	
+	XMFLOAT3 cPos = { 0,5,60 };
+	XMFLOAT3 move = { 1,1,1 };
 
 	
 

@@ -9,7 +9,7 @@
 #include "Collision.h"
 #include"PostEffect.h"
 #include "Object3d.h"
-
+#include "LevelLoader.h"
 
 GameScene::GameScene() {}
 GameScene::~GameScene() {
@@ -54,7 +54,7 @@ void GameScene::Initialize() {
 
 	//stageWorldTransform_.translation_ = Vector3(0, -2.1f, 0);
 	
-	camera->SetTarget({ 0,20,0 });
+	camera->SetTarget(cPos);
 	camera->SetDistance(100.0f);
 
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
@@ -69,6 +69,8 @@ void GameScene::Initialize() {
 	object1 = new Object3d;
 	object1->Initialize();
 	object1->SetModel(model1);
+	object1->PlayAnimation();
+
 	
 }
 
@@ -82,7 +84,23 @@ void GameScene::Update() {
 	viewProjection_.UpdateMatrix();
 	//object1->PlayAnimation();
 	object1->Update();
-
+	if (input_->PushKey(DIK_A))
+	{
+		cPos.x -= move.x;
+	}
+	if (input_->PushKey(DIK_D))
+	{
+		cPos.x += move.x;
+	}
+	if (input_->PushKey(DIK_W))
+	{
+		cPos.z += move.z;
+	}
+	if (input_->PushKey(DIK_S))
+	{
+		cPos.z -= move.z;
+	}
+	camera->SetTarget(cPos);
 	//全ての衝突をチェック
 	//collisionManager->CheckAllCollisions();
 

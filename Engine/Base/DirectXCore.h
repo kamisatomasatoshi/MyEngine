@@ -15,6 +15,8 @@ public://メンバ関数
 	// シングルトンインスタンスの取得
 	static DirectXCore* GetInstance();
 
+	 
+
 	void DirectXCoreInitialize(HWND hwnd, int window_width, int window_height);
 
 
@@ -68,7 +70,7 @@ private://メンバ変数
 
 private://メンバ変数
 	DirectXCore() = default;
-	~DirectXCore() = default;
+	~DirectXCore();
 	DirectXCore(const DirectXCore&) = delete;
 	const DirectXCore& operator=(const DirectXCore&) = delete;
 

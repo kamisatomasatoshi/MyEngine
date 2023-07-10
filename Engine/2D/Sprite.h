@@ -33,6 +33,8 @@ public: // サブクラス
 	};
 
 public: // 静的メンバ関数
+	//
+	~Sprite();
 
 	// 静的初期化
 	static void StaticInitialize(ID3D12Device* device,const std::wstring& directoryPath = L"Resources/");
