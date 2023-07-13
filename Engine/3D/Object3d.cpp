@@ -177,6 +177,13 @@ void Object3d::CreateGraphicsPipeline()
 }
 
 
+Object3d::~Object3d()
+{
+	rootsignature.Reset();
+	pipelinestate.Reset();
+	constBuffSkin.Reset();
+}
+
 void Object3d::Initialize()
 {
 	

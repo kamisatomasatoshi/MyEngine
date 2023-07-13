@@ -336,6 +336,10 @@ FbxModel::~FbxModel() {
 	}
 	materials_.clear();
 	fbxScene->Destroy();
+
+	sRootSignature_.Reset();
+	sPipelineState_.Reset();
+	descHeapSRV.Reset();
 }
 
 void FbxModel::Initialize() {

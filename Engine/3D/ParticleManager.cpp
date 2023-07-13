@@ -32,6 +32,12 @@ float easeInQuint(float x)
 	return x * x * x * x * x;
 }
 
+ParticleManager::~ParticleManager()
+{
+	rootsignature.Reset();
+	pipelinestate.Reset();
+}
+
 void ParticleManager::StaticInitialize(ID3D12Device* device)
 {
 	// nullptrチェック

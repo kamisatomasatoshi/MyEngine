@@ -78,6 +78,11 @@ void TextureManager::SetGraphicsRootDescriptorTable(
 
 }
 
+TextureManager::~TextureManager()
+{
+	descriptorHeap_.Reset();
+}
+
 uint32_t TextureManager::LoadInternal(const std::string& fileName) {
 
 	assert(NextDescriptorHeapNumber_ < kNumDescriptors);

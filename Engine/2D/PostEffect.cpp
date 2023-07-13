@@ -33,6 +33,20 @@ Microsoft::WRL::ComPtr<ID3D12RootSignature> PostEffect::rootSignature;
 
 const float PostEffect::clearColor[4] = {0,0,0,0};
 
+PostEffect::~PostEffect()
+{
+	device_->Release();
+	commandList->Release();
+	
+	pipelineState.Reset();
+	rootSignature.Reset();
+
+	descHeapSRV.Reset();
+	descHeapRTV.Reset();
+	descHeapDSV.Reset();
+	
+}
+
 void PostEffect::Initialize(ID3D12Device* device)
 {
 	HRESULT result;

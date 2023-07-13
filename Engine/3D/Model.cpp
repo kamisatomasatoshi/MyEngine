@@ -248,6 +248,9 @@ Model::~Model() {
 		delete m.second;
 	}
 	materials_.clear();
+
+	sRootSignature_.Reset();
+	sPipelineState_.Reset();
 }
 
 void Model::Initialize(const std::string& modelname, bool smoothing) {

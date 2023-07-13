@@ -6,6 +6,12 @@
 
 using namespace DirectX;
 
+Mesh::~Mesh()
+{
+	vertBuff_->Release();
+	indexBuff_->Release();
+}
+
 void Mesh::SetName(const std::string& name_) { this->name_ = name_; }
 
 void Mesh::AddVertex(const VertexPosNormalUv& vertex) { vertices_.emplace_back(vertex); }

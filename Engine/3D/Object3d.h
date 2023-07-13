@@ -53,6 +53,8 @@ private: // 静的メンバ変数
 	ComPtr<ID3D12Resource> constBuffSkin;
 
 public: // メンバ関数
+
+	~Object3d();
 	/// <summary>
 	/// 初期化
 	/// </summary>

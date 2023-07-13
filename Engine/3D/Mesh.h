@@ -30,6 +30,8 @@ public: // サブクラス
 		Vector2 uv;     // uv座標
 	};
 
+	~Mesh();
+
 public: // メンバ関数
 	/// <summary>
 	/// 名前を取得

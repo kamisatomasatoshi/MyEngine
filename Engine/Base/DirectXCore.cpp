@@ -22,17 +22,17 @@ DirectXCore* DirectXCore::GetInstance() {
 
 DirectXCore::~DirectXCore()
 {
-	/*dxgiFactory.Reset();
-	commandList.Reset();
-	commandAllocator.Reset();
-	commandQueue.Reset();
-	swapChain.Reset();
+	//dxgiFactory.Reset();
+	//commandList.Reset();
+	//commandAllocator.Reset();
+	//commandQueue.Reset();
+	//swapChain.Reset();
 	backBuffers.clear();
 	depthBuffer.Reset();
 	rtvHeap.Reset();
 	dsvHeap.Reset();
-	fence.Reset();
-	device.Reset();*/
+	//fence.Reset();
+	//device.Reset();
 
 }
 

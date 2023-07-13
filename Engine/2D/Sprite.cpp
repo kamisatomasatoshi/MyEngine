@@ -23,9 +23,15 @@ Matrix4 Sprite::Matrix4Projection_;
 
 Sprite::~Sprite()
 {
-	vertBuff_->Release();
-	constBuff_->Release();
-
+	//Device_->Release();
+	//CommandList_->Release();
+	RootSignature_.Reset();
+	PipelineStates_[0].Reset();
+	PipelineStates_[1].Reset();
+	PipelineStates_[3].Reset();
+	PipelineStates_[4].Reset();
+	PipelineStates_[5].Reset();
+	
 }
 
 void Sprite::StaticInitialize(

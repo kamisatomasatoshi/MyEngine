@@ -3,6 +3,7 @@
 class PostEffect
 {
 public:
+    ~PostEffect();
 
     static void Initialize(ID3D12Device* device);
     
