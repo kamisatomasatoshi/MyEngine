@@ -25,6 +25,7 @@ Sprite::~Sprite()
 {
 	vertBuff_->Release();
 	constBuff_->Release();
+
 }
 
 void Sprite::StaticInitialize(

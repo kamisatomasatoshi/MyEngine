@@ -14,6 +14,9 @@
 GameScene::GameScene() {}
 GameScene::~GameScene() {
 	//model_.reset();
+	delete model1;
+	delete camera;
+	delete object1;
 }
 
 void GameScene::Initialize() {
