@@ -22,7 +22,7 @@ DirectXCore* DirectXCore::GetInstance() {
 
 DirectXCore::~DirectXCore()
 {
-	dxgiFactory.Reset();
+	/*dxgiFactory.Reset();
 	commandList.Reset();
 	commandAllocator.Reset();
 	commandQueue.Reset();
@@ -32,7 +32,7 @@ DirectXCore::~DirectXCore()
 	rtvHeap.Reset();
 	dsvHeap.Reset();
 	fence.Reset();
-	device.Reset();
+	device.Reset();*/
 
 }
 
@@ -272,7 +272,7 @@ void DirectXCore::InitializeDevice() {
 		// エラー時にブレークを発生させる
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
+		//infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
 	}
 #endif
 }
