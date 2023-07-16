@@ -319,6 +319,16 @@ void Object3d::PlayAnimation()
 
 }
 
+Object3d* Object3d::Create()
+{
+	// メモリ確保
+	Object3d* instance = new Object3d;
+	instance->Initialize();
+
+	return instance;
+}
+
+
 void Object3d::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	// モデルの割り当てがなければ描画しない

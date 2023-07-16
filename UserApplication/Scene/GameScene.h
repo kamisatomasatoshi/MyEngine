@@ -21,7 +21,6 @@
 #include "BoxCollision.h"
 
 //#include "Player.h"
-//#include "GameCamera.h"
 //#include"Boss.h"
 #include <CollisionManager.h>
 //#include"MiniFish.h"
@@ -29,6 +28,9 @@
 /// <summary>
 /// ゲームシーン
 /// </summary>
+/// 
+struct LevelData;
+
 class GameScene : public BaseScene {
 protected:
 	// Microsoft::WRL::を省略
@@ -81,9 +83,19 @@ private: // メンバ変数
 	DirectXCore* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 
+	LevelData* levelData_=nullptr;
+
 	FbxModel* model1 = nullptr;
+	FbxModel* cubeModel = nullptr;
+
 	Object3d* object1 = nullptr;
+	Object3d* cube = nullptr;
+
 	DebugCamera* camera = nullptr;
+
+	std::unordered_map<std::string, FbxModel*>models;
+	std::vector<Object3d*> objects;
+
 	//ビュープロジェクション
 	ViewProjection viewProjection_;
 	//ワールド変換データ

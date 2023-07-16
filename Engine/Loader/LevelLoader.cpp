@@ -4,7 +4,7 @@
 #include <fstream>
 #include <cassert>
 
-const std::string LevelLoader::kDefaultBaseDirectory = "Resources/levels/";
+const std::string LevelLoader::kDefaultBaseDirectory = "Resources/";
 const std::string LevelLoader::kExtension = ".json";
 
 LevelData* LevelLoader::LoadFile(const std::string& fileName) {
@@ -62,9 +62,9 @@ LevelData* LevelLoader::LoadFile(const std::string& fileName) {
 			// トランスフォームのパラメータ読み込み
 			nlohmann::json& transform = object["transform"];
 			// 平行移動
-			objectData.translation.m128_f32[0] = (float)transform["translation"][1];
-			objectData.translation.m128_f32[1] = (float)transform["translation"][2];
-			objectData.translation.m128_f32[2] =- (float)transform["translation"][0];
+			objectData.translation.m128_f32[0] = (float)transform["transform"][1];
+			objectData.translation.m128_f32[1] = (float)transform["transform"][2];
+			objectData.translation.m128_f32[2] =- (float)transform["transform"][0];
 			objectData.translation.m128_f32[3] = 1.0f;
 			// 回転角
 			objectData.rotation.m128_f32[0] = -(float)transform["rotation"][1];

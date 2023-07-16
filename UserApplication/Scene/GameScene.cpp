@@ -17,6 +17,7 @@ GameScene::~GameScene() {
 	delete model1;
 	delete camera;
 	delete object1;
+	//safe_delete(levelData_);
 }
 
 void GameScene::Initialize() {
@@ -61,18 +62,61 @@ void GameScene::Initialize() {
 	camera->SetDistance(100.0f);
 
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
-
+	cubeModel = FbxLoader::GetInstance()->LoadModelFromFile("cube");
 	//デバイスのセット
 	Object3d::SetDevice(dxCommon_->GetDevice());
 	//カメラのセット
 	Object3d::SetCamera(camera);
 	//グラフィックスパイプライン生成
 	Object3d::CreateGraphicsPipeline();
+
+	//レベルデータの読み込み
+	levelData_ = LevelLoader::LoadFile("test");
+	
+
 	
 	object1 = new Object3d;
 	object1->Initialize();
 	object1->SetModel(model1);
 	object1->PlayAnimation();
+	//cube = new Object3d;
+	//cube->Initialize();
+	//cube->SetModel(cubeModel);
+	//cube->PlayAnimation();
+	
+	//models.insert(std::make_pair("Cube", cubeModel));
+	
+
+	// レベルデータからオブジェクトを生成、配置
+	//for (auto& objectData : levelData_->objects) {
+	//	// ファイル名から登録済みモデルを検索
+	//	FbxModel* model = nullptr;
+	//	decltype(models)::iterator it = models.find(objectData.fileName);
+	//	if (it != models.end()) {
+	//		model = it->second;
+	//	}
+
+	//	// モデルを指定して3Dオブジェクトを生成
+	//	Object3d* newObject = Object3d::Create();
+
+	//	// 座標
+	//	DirectX::XMFLOAT3 pos;
+	//	DirectX::XMStoreFloat3(&pos, objectData.translation);
+	//	newObject->SetPosition(pos);
+
+	//	// 回転角
+	//	DirectX::XMFLOAT3 rot;
+	//	DirectX::XMStoreFloat3(&rot, objectData.rotation);
+	//	newObject->SetRotation(rot);
+
+	//	// 座標
+	//	DirectX::XMFLOAT3 scale;
+	//	DirectX::XMStoreFloat3(&scale, objectData.scaling);
+	//	newObject->SetScale(scale);
+	//	
+	//	// 配列に登録
+	//	objects.push_back(newObject);
+	//}
 
 	
 }
@@ -106,6 +150,10 @@ void GameScene::Update() {
 	camera->SetTarget(cPos);
 	//全ての衝突をチェック
 	//collisionManager->CheckAllCollisions();
+
+	/*for (auto& object : objects) {
+		object->Update();
+	}*/
 
 }
 
@@ -143,7 +191,11 @@ void GameScene::Draw() {
 
 
 	//stageModel_->Draw(stageWorldTransform_,viewProjection_);
-	object1->Draw(commandList);
+	//object1->Draw(commandList);
+
+	/*for (auto& object : objects) {
+		object->Draw(commandList);
+	}*/
 	
 
 	//3Dオブジェクト描画後処理

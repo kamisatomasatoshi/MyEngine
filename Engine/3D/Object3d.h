@@ -69,6 +69,17 @@ public: // メンバ関数
 	/// </summary>
 	void PlayAnimation();
 
+	static Object3d* Create();
+
+	//ゲッター
+	XMFLOAT3 GetPosition() { return position; }
+
+	//セッター
+	void SetPosition(const XMFLOAT3& position) { this->position = position; }
+	void SetRotation(const XMFLOAT3& rotate) { this->rotation = rotate; }
+	void SetScale(const XMFLOAT3& scale) { this->scale = scale; }
+
+
 	/// <summary>
 	/// 描画
 	/// </summary>
