@@ -12,7 +12,7 @@
 #include "DebugCamera.h"
 #include "BaseScene.h"
 #include "SceneManager.h"
-
+#include <list>
 #include "FbxModel.h"
 
 #include<memory>
@@ -20,7 +20,7 @@
 
 #include "BoxCollision.h"
 
-//#include "Player.h"
+#include "Player.h"
 //#include"Boss.h"
 #include <CollisionManager.h>
 //#include"MiniFish.h"
@@ -83,13 +83,41 @@ private: // メンバ変数
 	DirectXCore* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 
+	//Player* player_ = nullptr;
+
+
 	LevelData* levelData_=nullptr;
 
-	FbxModel* model1 = nullptr;
-	FbxModel* cubeModel = nullptr;
-
-	Object3d* object1 = nullptr;
 	Object3d* cube = nullptr;
+
+	Object3d* bone = nullptr;
+	FbxModel* model1 = nullptr;
+
+	//プレイヤー情報
+	Object3d* player = nullptr;
+	FbxModel* playerModel = nullptr;
+	//Model* playerModel_ = nullptr;
+	XMFLOAT3 playerPos = { 0,-40,30 };
+	XMFLOAT3 playerMoveSpeed = { 1,1,1 };
+	XMFLOAT3 playerScale = { 0.25, 0.25, 0.25 };
+	//プレイヤー攻撃（バレット）
+	bool isAttck = false;
+	std::list<Object3d*> bullets;
+	FbxModel* bulletModel = nullptr;
+	XMFLOAT3 bulletPos = playerPos;
+	XMFLOAT3 bulletMoveSpeed = { 3,3,3 };
+	XMFLOAT3 bulletScale = { 0.5,0.5,0.5 };
+	CONST INT MAXTIME = 120;
+	int bulletTimer = MAXTIME;
+
+
+	//エネミー情報
+	Object3d* enemy = nullptr;
+	FbxModel* enemyModel = nullptr;
+	XMFLOAT3 enemyPos = { 0,-60,250 };
+	XMFLOAT3 enemyMoveSpeed = { 1,1,1 };
+	XMFLOAT3 enemyScale = { 0.25, 0.25, 0.25 };
+
 
 	DebugCamera* camera = nullptr;
 

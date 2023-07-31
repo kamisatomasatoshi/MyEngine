@@ -161,7 +161,7 @@
     <None Include="Resources\Shaders\FBX.hlsli" />
     <None Include="Resources\Shaders\Obj.hlsli" />
     <None Include="Resources\Shaders\Particle.hlsli" />
-    <None Include="Resources\Shaders\PostEffectGlow.hlsli" />
+    <None Include="Resources\Shaders\PostEffectTest.hlsli" />
     <None Include="Resources\Shaders\Primitive.hlsli" />
     <None Include="Resources\Shaders\Shape.hlsli" />
     <None Include="Resources\Shaders\Sprite.hlsli" />
@@ -218,13 +218,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\PostEffectGlowPS.hlsl">
+    <FxCompile Include="Resources\Shaders\PostEffectTestPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\PostEffectGlowVS.hlsl">
+    <FxCompile Include="Resources\Shaders\PostEffectTestVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
@@ -411,8 +411,8 @@
     <ClCompile Include="Engine\Math\Vector3.cpp" />
     <ClCompile Include="Engine\Math\Vector4.cpp" />
     <ClCompile Include="UserApplication\base\MainGame.cpp" />
-    <ClCompile Include="UserApplication\Player\Player.cpp" />
     <ClCompile Include="Engine\Scene\SceneFactory.cpp" />
+    <ClCompile Include="UserApplication\Player\Player.cpp" />
     <ClCompile Include="UserApplication\Scene\SceneManager.cpp" />
     <ClCompile Include="UserApplication\Scene\GameScene.cpp" />
     <ClCompile Include="UserApplication\Skydome\Skydome.cpp" />

@@ -14,25 +14,15 @@ Player::~Player()
 	
 }
 
-void Player::Initialize(Model* model, float WindowWidth, float WindowHeight) {
-	//NULLポインタチェック
-	assert(model);
-	playerModel_ = model;
-	oldPlayerModel_.reset(Model::CreateFromOBJ("UFO", true));
-
-	//シングルインスタンスを取得する
-	input_ = Input::GetInstance();
-
-	Window_Width = WindowWidth;
-	Window_Height = WindowHeight;
-
+void Player::Initialize() {
 	
-
-	// コリジョンマネージャに追加
-	collider = new SphereCollider(Vector4(0, radius, 0, 0), radius);
-	CollisionManager::GetInstance()->AddCollider(collider);
-
-	playerAvoidance = 6.0f;
+	playerModel = FbxLoader::GetInstance()->LoadModelFromFile("cube");
+	player = new Object3d;
+	player->Initialize();
+	player->SetModel(playerModel);
+	player->SetPosition(pos);
+	
+	
 
 	for (int i = 0; i < SphereCount; i++) {
 		// コリジョンマネージャに追加
@@ -50,10 +40,7 @@ void Player::Initialize(Model* model, float WindowWidth, float WindowHeight) {
 	collider->Update(worldTransform_.matWorld_);
 	collider->SetAttribute(COLLISION_ATTR_ALLIES);
 
-	for (int i = 0; i < SphereCount; i++) {
-		playerAttackTransformaaaa_[i].Initialize();
-		playerAttackTransformaaaa_[i].TransferMatrix();
-	}
+	
 
 	worldTransform_.TransferMatrix();
 	oldWorldTransform_.TransferMatrix();
@@ -73,8 +60,24 @@ void Player::Update(const ViewProjection& viewProjection) {
 }
 
 void Player::Move() {
+	if (input_->PushKey(DIK_A))
+	{
+		pos.x -= moveSpeed.x;
+	}
+	if (input_->PushKey(DIK_D))
+	{
+		pos.x += moveSpeed.x;
+	}
+	if (input_->PushKey(DIK_W))
+	{
+		pos.z += moveSpeed.z;
+	}
+	if (input_->PushKey(DIK_S))
+	{
+		pos.z -= moveSpeed.z;
+	}
 
-
+	player->SetPosition(pos);
 }
 
 
@@ -83,11 +86,11 @@ void Player::Move() {
 
 
 
-void Player::Draw(ViewProjection viewProjection_) {
+void Player::Draw(ViewProjection viewProjection_, ID3D12GraphicsCommandList* cmdlist) {
 
 	
-	playerModel_->Draw(worldTransform_, viewProjection_);
-	
+	//playerModel_->Draw(worldTransform_, viewProjection_);
+	player->Draw(cmdlist);
 	
 }
 
@@ -116,8 +119,7 @@ Vector3 Player::bVelocity(Vector3 velocity, WorldTransform& worldTransform) {
 
 void Player::Collision()
 {
-		 
-	}
+	
 }
 
 

@@ -12,8 +12,16 @@
 #include "Vector4.h"
 #include <Easing.h>
 #include"ParticleManager.h"
-
+#include "Object3d.h"
 class Player {
+
+protected:
+
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+	using XMVECTOR = DirectX::XMVECTOR;
+	using XMMATRIX = DirectX::XMMATRIX;
 
 public:
 	Player();
@@ -22,7 +30,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// <summary>
-	void Initialize(Model* model, float WindowWidth, float WindowHeight);
+	void Initialize();
 
 	/// <summary>
 	/// 更新
@@ -38,7 +46,7 @@ public:
 	/// <summary>
 	/// 描画
 	/// <summary>
-	void Draw(ViewProjection viewProjection_);
+	void Draw(ViewProjection viewProjection_, ID3D12GraphicsCommandList* cmdlist);
 
 	
 
@@ -46,18 +54,8 @@ public:
 	Vector3 GetWorldPosition();
 	float GetRadius() { return radius; }
 
-
-	
-	
-
 private:
-
-
 	void Collision();
-	
-
-	
-
 private:
 
 	
@@ -76,14 +74,12 @@ private:
 	Vector3 colliderPos[SphereCount];
 	Matrix4 worldSpherePos[SphereCount];
 	bool makeColliders = false;
-
-	Vector3 AvoidanceMove;
-
-	WorldTransform playerAttackTransformaaaa_[SphereCount];
-
 	//モデル
-	Model* playerModel_ = nullptr;
-	std::unique_ptr<Model> oldPlayerModel_;
+	Object3d* player;
+	FbxModel* playerModel = nullptr;
+	
+	XMFLOAT3 pos = {10,0,0};
+	XMFLOAT3 moveSpeed = { 3,3,3 };
 
 	Matrix4 CameraRot;
 	Matrix4 EnemyPos;

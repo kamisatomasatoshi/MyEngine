@@ -19,7 +19,11 @@ void Framework::Initialize()
 	// 入力の初期化
 	input_ = Input::GetInstance();
 	input_->Initialize();
-
+	//ポストエフェクト用テクスチャ読み込み
+	//Sprite::Create(TextureManager::Load("white1x1.png"));
+	//ポストエフェクト
+	postEffect_ = new PostEffect;
+	postEffect_->Initialize(directXCore_->GetDevice());
 
 	// テクスチャマネージャの初期化
 	TextureManager_ = TextureManager::GetInstance();
@@ -102,7 +106,7 @@ void Framework::Finalize()
 	winApp_->DeleteGameWindow();
 	winApp_->Destroy();
 
-
+	delete postEffect_;
 }
 
 bool Framework::isPlayMyGame()
@@ -125,20 +129,24 @@ void Framework::Run()
 			break;
 		}
 
+		postEffect_->PreDrawScene(directXCore_->GetCommandList());
+		postEffect_->PostDrawScene();
+
 		PostEffectDraw();
+
+
 		// 描画開始
+
 		directXCore_->PreDraw();
-
+		//postEffect_->Draw(directXCore_->GetCommandList());
 		Draw();
-
-
 		//ImGui描画
 		imGui->Draw();
 
-		
-
 		// 描画終了
 		directXCore_->PostDraw();
+		
+
 
 		//FPS固定
 		fps->FpsControlEnd();

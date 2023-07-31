@@ -1,7 +1,7 @@
 #pragma once
 #include "DirectXCore.h"
 #include "GameScene.h"
-
+#include "PostEffect.h"
 #include "TextureManager.h"
 #include "WinApp.h"
 #include "Input.h"
@@ -53,7 +53,7 @@ protected:
 	Input* input_ = nullptr;
 	SceneManager* sceneManager_;
 	TextureManager* TextureManager_ = nullptr;
-
+	PostEffect* postEffect_ = nullptr;
 
 	//シングルトン以外
 	std::unique_ptr<ImGuiManager> imGui;

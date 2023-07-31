@@ -22,10 +22,10 @@
     <FxCompile Include="Resources\Shaders\ParticleVS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\PostEffectGlowPS.hlsl">
+    <FxCompile Include="Resources\Shaders\PostEffectTestPS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\PostEffectGlowVS.hlsl">
+    <FxCompile Include="Resources\Shaders\PostEffectTestVS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\PrimitiveVS.hlsl">
@@ -198,9 +198,6 @@
     <ClCompile Include="UserApplication\main.cpp">
       <Filter>ユーザーリソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="UserApplication\Player\Player.cpp">
-      <Filter>ユーザーリソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="UserApplication\Scene\GameScene.cpp">
       <Filter>ユーザーリソース ファイル\Scene</Filter>
     </ClCompile>
@@ -221,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Loader\LevelLoader.cpp">
       <Filter>Engine\Cpp\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="UserApplication\Player\Player.cpp">
+      <Filter>ユーザーリソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -409,7 +409,7 @@
     <None Include="Resources\Shaders\Particle.hlsli">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Resources\Shaders\PostEffectGlow.hlsli">
+    <None Include="Resources\Shaders\PostEffectTest.hlsli">
       <Filter>Shaders</Filter>
     </None>
     <None Include="Resources\Shaders\Primitive.hlsli">
