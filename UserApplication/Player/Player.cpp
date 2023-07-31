@@ -116,24 +116,6 @@ Vector3 Player::bVelocity(Vector3 velocity, WorldTransform& worldTransform) {
 
 void Player::Collision()
 {
-	//スペースキーを押していたら
-	for (int i = 0; i < 4; i++)
-	{
-		//消えるまでの時間
-		const float rnd_life = 70.0f;
-		//最低限のライフ
-		const float constlife = 10;
-		float life = (float)rand() / RAND_MAX * rnd_life + constlife;
-
-		//XYZの広がる距離
-		const float rnd_pos = 30.0f;
-		//Y方向には最低限の飛ぶ距離
-		const float constPosY = 15;
-		Vector3 pos{};
-		pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-		pos.y = abs((float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f) + 2;
-		pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-		
 		 
 	}
 }
