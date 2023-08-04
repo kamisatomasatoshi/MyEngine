@@ -22,10 +22,10 @@ float4 main(VSOutput input) : SV_TARGET
 	//Tex.rgb += float3(noise, noise, noise);
 	//return float4(Tex.rgb, 1);
 
-	//uv指定したピクセルの色をサンプリング
-	float4 texcolor = tex0.Sample(smp,input.uv);
-	//RGBの数値を二倍にして出力
-	return 0;//0float4(texcolor.rgb , 1);
+	////uv指定したピクセルの色をサンプリング
+	//float4 texcolor = tex0.Sample(smp,input.uv);
+	////RGBの数値を二倍にして出力
+	//return float4(texcolor.rgb, 1);
 
 	//分割して出す
 	/*float4 colortex0 = tex0.Sample(smp,input.uv);
@@ -38,7 +38,7 @@ float4 main(VSOutput input) : SV_TARGET
 	return float4(color.rgb, 1);*/
 
 
-	/*float2 add = { 0.5f, 0.0f };
+	float2 add = { 0.5f, 0.0f };
 	float4 texcolor0 = tex0.Sample(smp, input.uv);
 
 	float offSetU = 1 / 1280.0f;
@@ -71,7 +71,7 @@ float4 main(VSOutput input) : SV_TARGET
 		color = 1 - texcolor0;
 	}
 
-	return float4(color.rgb, 1);*/
+	return float4(color.rgb, 1);
 
 }
 

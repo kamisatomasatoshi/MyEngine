@@ -82,7 +82,7 @@ void GameScene::Initialize()
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 	playerModel = FbxLoader::GetInstance()->LoadModelFromFile("cube");
 	bulletModel = FbxLoader::GetInstance()->LoadModelFromFile("cube");
-	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube");
+	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("UFO");
 	//デバイスのセット
 	Object3d::SetDevice(dxCommon_->GetDevice());
 	//カメラのセット
@@ -91,7 +91,7 @@ void GameScene::Initialize()
 	Object3d::CreateGraphicsPipeline();
 
 	//レベルデータの読み込み
-	levelData_ = LevelLoader::LoadFile("test");
+	levelData_ = LevelLoader::LoadFile("test01");
 
 	bone = new Object3d;
 	bone->Initialize();
@@ -127,38 +127,38 @@ void GameScene::Initialize()
 	//cube->PlayAnimation();
 	
 	//models.insert(std::make_pair("Cube", cubeModel));
-	
+	models.insert(std::make_pair("enemy", enemyModel));
 	{
-		// レベルデータからオブジェクトを生成、配置
-		//for (auto& objectData : levelData_->objects) {
-		//	// ファイル名から登録済みモデルを検索
-		//	FbxModel* model = nullptr;
-		//	decltype(models)::iterator it = models.find(objectData.fileName);
-		//	if (it != models.end()) {
-		//		model = it->second;
-		//	}
+		 //レベルデータからオブジェクトを生成、配置
+		for (auto& objectData : levelData_->objects) {
+			// ファイル名から登録済みモデルを検索
+			FbxModel* model = nullptr;
+			decltype(models)::iterator it = models.find(objectData.fileName);
+			if (it != models.end()) {
+				model = it->second;
+			}
 
-		//	// モデルを指定して3Dオブジェクトを生成
-		//	Object3d* newObject = Object3d::Create();
+			// モデルを指定して3Dオブジェクトを生成
+			Object3d* newObject = Object3d::Create();
+			newObject->SetModel(model);
+			// 座標
+			DirectX::XMFLOAT3 pos;
+			DirectX::XMStoreFloat3(&pos, objectData.translation);
+			newObject->SetPosition(pos);
 
-		//	// 座標
-		//	DirectX::XMFLOAT3 pos;
-		//	DirectX::XMStoreFloat3(&pos, objectData.translation);
-		//	newObject->SetPosition(pos);
+			// 回転角
+			DirectX::XMFLOAT3 rot;
+			DirectX::XMStoreFloat3(&rot, objectData.rotation);
+			newObject->SetRotation(rot);
 
-		//	// 回転角
-		//	DirectX::XMFLOAT3 rot;
-		//	DirectX::XMStoreFloat3(&rot, objectData.rotation);
-		//	newObject->SetRotation(rot);
-
-		//	// 座標
-		//	DirectX::XMFLOAT3 scale;
-		//	DirectX::XMStoreFloat3(&scale, objectData.scaling);
-		//	newObject->SetScale(scale);
-		//	
-		//	// 配列に登録
-		//	objects.push_back(newObject);
-		//}
+			// 座標
+			DirectX::XMFLOAT3 scale;
+			DirectX::XMStoreFloat3(&scale, objectData.scaling);
+			newObject->SetScale(scale);
+			
+			// 配列に登録
+			objects.push_back(newObject);
+		}
 	}
 	
 }
@@ -234,9 +234,9 @@ void GameScene::Update() {
 	//全ての衝突をチェック
 	//collisionManager->CheckAllCollisions();
 
-	/*for (auto& object : objects) {
+	for (auto& object : objects) {
 		object->Update();
-	}*/
+	}
 	if (input_->PushKey(DIK_P) && isAttck == false)
 	{
 		bulletPos = playerPos;
@@ -267,7 +267,14 @@ void GameScene::PostEffectDraw()
 	PostEffect::PreDrawScene(commandList);
 
 	ParticleManager::PreDraw(commandList);
+	for (auto& object : objects) {
+		object->Draw(commandList);
+	}
 
+
+	//3Dオブジェクト描画後処
+	player->Draw(commandList);
+	bone->Draw(commandList);
 	
 
 	ParticleManager::PostDraw();
@@ -293,21 +300,12 @@ void GameScene::Draw() {
 	
 	//stageModel_->Draw(stageWorldTransform_,viewProjection_);
 	
-	/*for (auto& object : objects) {
-		object->Draw(commandList);
-	}*/
-	//player_->Draw(viewProjection_);
-
-	//3Dオブジェクト描画後処理
-
-
-	player->Draw(commandList);
-	bone->Draw(commandList);
+	
 	if (isAttck)
 	{
 		//bullets->Draw(commandList);
 	}
-	enemy->Draw(commandList);
+	//enemy->Draw(commandList);
 	Model::PostDraw();
 
 	FbxModel::PreDraw(commandList);
